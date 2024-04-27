@@ -1,8 +1,9 @@
 import telebot
 from telebot import types
 import json
+import config
 
-TOKEN = '7061894818:AAGuKyYNOJfiM9qLDToXMpaiPEv8zMBeV1M'
+TOKEN = config.TELEGRAM_TOKEN
 
 # Создание экземпляра бота
 bot = telebot.TeleBot(TOKEN)
@@ -148,7 +149,7 @@ def handle_question_3(message):
     states[user_id] = "authorized"
     bot.send_message(message.chat.id, "Спасибо за ответы!", reply_markup=create_review_markup())
 
-    with open('answer.json', 'a', encoding='utf-8') as f:
+    with open('../answer.json', 'a', encoding='utf-8') as f:
         json.dump(user_reviews[user_id], f, ensure_ascii=False)
         del(user_reviews[user_id])
         f.write("\n")
