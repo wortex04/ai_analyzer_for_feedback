@@ -2,6 +2,7 @@ import telebot
 from telebot import types
 import json
 import config
+import datetime
 
 TOKEN = config.TELEGRAM_TOKEN
 
@@ -99,7 +100,13 @@ def handle_category_selection(message):
 def handle_category_selection(message):
     user_id = message.from_user.id
     # TODO set web in json
+    message_time = message.date
+    user_reviews[user_id] = message_time
     user_reviews[user_id] = {}
+    message_time = datetime.datetime.fromtimestamp(message_time)
+    formatted_time = message_time.strftime('%Y-%m-%d %H:%M:%S')
+
+    user_reviews[user_id]['timestamp'] = formatted_time
     user_reviews[user_id]['question_1'] = message.text
     bot.send_message(message.chat.id, f"Что вам больше всего понравилось в теме вебинара и почему?",
                      reply_markup=telebot.types.ReplyKeyboardRemove())
@@ -149,7 +156,7 @@ def handle_question_3(message):
     states[user_id] = "authorized"
     bot.send_message(message.chat.id, "Спасибо за ответы!", reply_markup=create_review_markup())
 
-    with open('../answer.json', 'a', encoding='utf-8') as f:
+    with open('answer.json', 'a', encoding='utf-8') as f:
         json.dump(user_reviews[user_id], f, ensure_ascii=False)
         del(user_reviews[user_id])
         f.write("\n")
