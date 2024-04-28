@@ -1,10 +1,11 @@
+import requests
 import telebot
 from telebot import types
 import json
-import config
 import datetime
+from config import token_bot
 
-TOKEN = config.TELEGRAM_TOKEN
+TOKEN = token_bot
 
 # Создание экземпляра бота
 bot = telebot.TeleBot(TOKEN)
@@ -158,6 +159,12 @@ def handle_question_3(message):
 
     with open('answer.json', 'a', encoding='utf-8') as f:
         json.dump(user_reviews[user_id], f, ensure_ascii=False)
+        url = "http://127.0.0.1:8000/api/v1/telegram_api/extend_csv"
+        print(user_reviews[user_id])
+        response = requests.post(url, json=user_reviews[user_id])
+
+        print(response)
+
         del(user_reviews[user_id])
         f.write("\n")
 
