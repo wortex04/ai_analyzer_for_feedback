@@ -1,2 +1,4 @@
 .env
 /telegram_bot/config.py
+.idea
+.venv

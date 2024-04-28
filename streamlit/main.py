@@ -100,7 +100,7 @@ def make_donut(input_response, input_text, input_color):
 response = requests.get("http://127.0.0.1:8000/api/v2/streamlit/get_csv_from_s3")
 
 # Check if the request was successful (status code 200)
-data = pd.read_csv("train_data.csv")
+data = pd.read_csv("static/train_data.csv")
 if response.status_code == 200:
     # Read the CSV data into a pandas dataframe
     data = pd.read_csv(io.StringIO(response.text))
@@ -119,7 +119,7 @@ with st.sidebar:
         format="DD.MM.YYYY",
     )
 
-    with open("sum_data.json", "r", encoding="UTF-8") as f:
+    with open("static/sum_data.json", "r", encoding="UTF-8") as f:
         json_sum_data = json.load(f)
     sum_text = json_sum_data[selected_webinar]
 

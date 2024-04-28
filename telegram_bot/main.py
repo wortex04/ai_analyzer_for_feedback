@@ -157,7 +157,7 @@ def handle_question_3(message):
     states[user_id] = "authorized"
     bot.send_message(message.chat.id, "Спасибо за ответы!", reply_markup=create_review_markup())
 
-    with open('answer.json', 'a', encoding='utf-8') as f:
+    with open('static/answer.json', 'a', encoding='utf-8') as f:
         json.dump(user_reviews[user_id], f, ensure_ascii=False)
         url = "http://127.0.0.1:8000/api/v1/telegram_api/extend_csv"
         print(user_reviews[user_id])
